@@ -1,0 +1,17 @@
+{
+  "name": "forwardr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "pashutk",
+  "license": "ISC",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.24.0",
+    "oauth": "^0.9.14",
+    "tumblr.js": "^1.1.1"
+  }
+}
