@@ -72,7 +72,7 @@ module.exports = class User {
 
   async getOAuthRequestToken() {
     const options = {
-      oauth_callback: `${config.FORWARDR_SERVER_HOST}:${config.FORWARDR_SERVER_PORT}/callback?id=${this.id}`,
+      oauth_callback: `${config.FORWARDR_SERVER_AUTH_HOST}/callback?id=${this.id}`,
     };
 
     return await new Promise((resolve, reject) => {

@@ -7,7 +7,7 @@ try {
 } catch(err) {};
 
 Object.assign(config, {
-  FORWARDR_SERVER_HOST: 'http://localhost',
+  FORWARDR_SERVER_AUTH_HOST: 'http://localhost',
   FORWARDR_SERVER_PORT: 8000,
   FORWARDR_TUMBLR_AUTH_URL: 'https://www.tumblr.com/oauth/authorize',
   FORWARDR_TUMBLR_REQUEST_TOKEN_URL: 'https://www.tumblr.com/oauth/request_token',

@@ -22,7 +22,7 @@ async function botMessageHandler(message) {
   try {
     const user = await User.getUserById(userId);
 
-    function isAuthorized() {
+    const isAuthorized = () => {
       if (!user.isAuthorized) {
         this.sendMessage(userId, `You need to log in your tumblr account. Use /start command.`);
       }
