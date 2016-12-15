@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node --harmony --harmony-async-await index.js"
   },
   "author": "pashutk",
   "license": "ISC",
   "dependencies": {
+    "nedb": "^1.8.0",
     "node-telegram-bot-api": "^0.24.0",
     "oauth": "^0.9.14",
     "tumblr.js": "^1.1.1"
