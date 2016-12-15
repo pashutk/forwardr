@@ -6,7 +6,7 @@ try {
 	config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 } catch(err) {};
 
-Object.assign(config, {
+module.exports = Object.assign({}, {
   FORWARDR_SERVER_AUTH_HOST: 'http://localhost',
   FORWARDR_SERVER_PORT: 8000,
   FORWARDR_TUMBLR_AUTH_URL: 'https://www.tumblr.com/oauth/authorize',
@@ -14,6 +14,4 @@ Object.assign(config, {
   FORWARDR_TUMBLR_ACCESS_TOKEN_URL: 'https://www.tumblr.com/oauth/access_token',
   FORWARDR_TUMBLR_OAUTH_VERSION: '1.0A',
   FORWARDR_TUMBLR_SIGNATURE_METHOD: 'HMAC-SHA1',
-}, process.env);
-
-module.exports = config;
+}, config, process.env);
