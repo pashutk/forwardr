@@ -178,6 +178,24 @@ module.exports = class User {
   }
 
   /**
+   * @TODO: add title and artist support
+   * @param {string} link
+   * @param {string} opt_caption
+   * @return {Promise}
+   */
+  async postAudio(link, opt_caption) {
+    const options = {
+      external_url: link
+    };
+
+    if (opt_caption) {
+      options.caption = opt_caption;
+    }
+
+    return await this.tumblrClient.createAudioPost(this.defaultBlog, options);
+  }
+
+  /**
    * @param {string} link
    * @return {Promise}
    */

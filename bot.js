@@ -70,6 +70,12 @@ async function botPhotoHandler(message) {
   const userId = message.chat.id;
   try {
     const user = await User.getUserById(userId);
+
+    if (!user.isAuthorized) {
+      this.sendMessage(userId, `You need to log in your tumblr account. Use /start command.`);
+      return;
+    }
+
     const largestPhoto = message.photo.reduce((prev, next) => {
       if (next.width * next.height > prev.width * prev.height) {
         return next;
@@ -90,6 +96,38 @@ async function botPhotoHandler(message) {
   }
 }
 
+async function botAudioHandler(message) {
+  const userId = message.chat.id;
+  try {
+    const user = await User.getUserById(userId);
+    
+    if (!user.isAuthorized) {
+      this.sendMessage(userId, `You need to log in your tumblr account. Use /start command.`);
+      return;
+    }
+
+    const audioLink = await this.getFileLink(message.audio.file_id);
+    let trackName = '';
+    if (message.audio.performer) {
+      trackName += message.audio.performer;
+    }
+
+    if (message.audio.title) {
+      if (message.audio.performer) {
+        trackName += ' - ';
+      }
+      trackName += message.audio.title;
+    }
+
+    const newPost = await user.postAudio(audioLink, trackName);
+    const postLink = await user.getPostLink(newPost.id);
+    this.sendMarkdown(userId, `Posted new audio, [post link](${postLink}).`);
+  } catch(err) {
+    console.log(err);
+    this.sendMessage(userId, `Error: ${err.message}`);
+  }
+}
+
 function createBot() {
   const options = { 
     polling: true
@@ -103,6 +141,7 @@ function createBot() {
   const bot = new TelegramBot(config.FORWARDR_TELEGRAM_BOT_TOKEN, options);
   bot.on('message', botMessageHandler);
   bot.on('photo', botPhotoHandler);
+  bot.on('audio', botAudioHandler);
   return bot;
 }
 
