@@ -1,4 +1,5 @@
 const config = require('./config');
+const MetaInspector = require('node-metainspector');
 const TelegramBot = require('node-telegram-bot-api');
 const User = require('./user');
 
@@ -15,6 +16,17 @@ Blog posts: *${blog.posts}*
 [Blog url](${blog.url})`);
   
   return `${header}\n\n${blogs.join('\n')}`;
+}
+
+async function getMetaData(url) {
+  return await new Promise((resolve, reject) => {
+    const client = new MetaInspector(url, { timeout: 5000 });
+
+    client.on("fetch", () => resolve(client));
+    client.on("error", reject);
+
+    client.fetch();
+  });
 }
 
 async function botMessageHandler(message) {
@@ -54,6 +66,23 @@ async function botMessageHandler(message) {
 
     if (message.text) {
       if (!isAuthorized()) return;
+
+      // if message is just url
+      let trimmedText = message.text.trim();
+      if (message.entities && message.entities[0].type === 'url' && trimmedText.length === message.entities[0].length) {
+        const metaData = {};
+        try {
+          let metaDataClient = await getMetaData(message.text);
+          Object.assign(metaData, metaDataClient);
+        } catch(metaDataError) {
+          this.sendMessage(userId, `Meta data scrapping error: ${metaDataError.message}`);
+        }
+
+        const newPost = await user.postLink(trimmedText, metaData);
+        const postLink = await user.getPostLink(newPost.id);
+        this.sendMarkdown(userId, `New link post, [post link](${postLink}).`);
+        return;
+      }
 
       const newPost = await user.postText(message.text);
       const postLink = await user.getPostLink(newPost.id);

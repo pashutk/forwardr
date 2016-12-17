@@ -205,6 +205,35 @@ module.exports = class User {
     });
   }
 
+  /**
+   * @param {string} link
+   * @param {Object} metaData
+   * @return {Promise}
+   */
+  async postLink(link, metaData) {
+    const options = {
+      url: link
+    };
+
+    if (metaData.title) {
+      options.title = metaData.title;
+    }
+
+    if (metaData.image) {
+      options.thumbnail = metaData.image;
+    }
+
+    if (metaData.description) {
+      options.excerpt = metaData.description;
+    }
+
+    if (metaData.author) {
+      options.author = metaData.author;
+    }
+
+    return await this.tumblrClient.createLinkPost(this.defaultBlog, options);
+  }
+
   async removeLast() {
     const data = await this.blogPosts;
     const posts = data.posts;
