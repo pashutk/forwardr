@@ -1,7 +1,7 @@
 {
   "name": "forwardr",
   "version": "0.1.1",
-  "description": "",
+  "description": "Telegram-to-Tumblr bot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
