@@ -1,6 +1,6 @@
 {
   "name": "forwardr",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Telegram-to-Tumblr bot",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "start": "node --harmony --harmony-async-await index.js"
   },
   "author": "pashutk",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "nedb": "^1.8.0",
     "node-metainspector": "^1.3.0",
@@ -18,5 +18,9 @@
   },
   "engines": {
     "node": ">=7.0.0"
-  }
+  },
+  "bugs": {
+    "url" : "https://github.com/owner/project/issues"
+  },
+  "repository": "pashutk/forwardr"
 }
